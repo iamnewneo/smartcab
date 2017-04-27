@@ -135,11 +135,15 @@ class LearningAgent(Agent):
 				action = random.choice(self.valid_actions)
 			else:
 				actions_for_state = self.Q[state].keys()
+				max_actions_list = []
 				max_action = actions_for_state[0]
 				for act in actions_for_state:
-					if self.Q[state][act] >= self.Q[state][max_action]:
-						max_action = act
-				action = max_action
+					if self.Q[state][act] > self.Q[state][max_action]:
+						del max_actions_list[:]
+						max_actions_list.append(act)
+					if self.Q[state][act] == self.Q[state][max_action]:
+						max_actions_list.append(act)
+				action = random.choice(max_actions_list)
 				# print("MAX_ACTION")
 				# print(action)
 
